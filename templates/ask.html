@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ask</title>
+    <link href="static/css/bootstrap.css" rel="stylesheet"/>
+  </head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-secondary">
+        <div class="container">
+            <a class="navbar-brand" href="#">ReRe</a>
+
+            <form class="d-flex" role="search">
+                <input class="form-control me-5" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn text-white" style="background-color: #18881a" type="submit">Ask!</button>
+            </form>
+
+
+            <div class="user-block">
+             
+                <div class="links d-flex align-items-center gap-5">
+                    <a href="#">Log in</a>
+                    <a href="#">Register</a>
+                </div>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- отступ сверху mt -->
+    <main class="container mt-2">
+        <div class="row">
+            <section class="col vh-100">
+                <div class="d-flex align-items-center gap-4 mb-4">
+                    <h1>New Question</h1>
+                </div>
+                
+
+
+
+                <form class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="questionTitle" class="form-label">Title</label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="questionTitle" 
+                               placeholder="How to...?" 
+                               maxlength="200"
+                               required>
+                        <div class="invalid-feedback">
+                            Please provide a question title (max 200 characters).
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                
+                    <!-- Поле текста вопроса -->
+                    <div class="mb-3">
+                        <label for="questionText" class="form-label">Question</label>
+                        <textarea class="form-control" 
+                                  id="questionText" 
+                                  rows="7"
+                                  maxlength="2000"
+                                  placeholder="Describe your question in details..."
+                                  required></textarea>
+                        <div class="invalid-feedback">
+                            Please provide question details (max 2000 characters).
+                        </div>
+                        <div class="form-text">
+                            Be specific and imagine you're asking a question to another person.
+                        </div>
+                    </div>
+                
+                    <!-- Поле тегов -->
+                    <div class="mb-3">
+                        <label for="questionTags" class="form-label">Tags</label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="questionTags" 
+                               placeholder="javascript python django"
+                               maxlength="100">
+                        <div class="form-text">
+                            Add up to 3 tags separated by spaces (max 20 chars each).
+                        </div>
+                        <div class="invalid-feedback">
+                            Each tag must be 2-20 characters long.
+                        </div>
+                    </div>
+                
+                    <!-- Кнопка отправки -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary px-4" type="submit">Post Question</button>
+                    </div>
+                
+                    <!-- Блок для общих ошибок формы -->
+                    <div class="alert alert-danger d-none mt-3" id="formErrors">
+                        <strong>Please fix these errors:</strong>
+                        <ul class="mb-0" id="errorList"></ul>
+                    </div>
+                </form>
+                
+                <script>
+                // Валидация формы
+                (function() {
+                    'use strict';
+                    const form = document.querySelector('.needs-validation');
+                    
+                    form.addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        
+                        // Проверка валидности
+                        if (form.checkValidity()) {
+                            // Дополнительная проверка тегов
+                            const tagsInput = document.getElementById('questionTags');
+                            const tags = tagsInput.value.trim().split(/\s+/).filter(tag => tag);
+                            
+                            if (tags.length > 3) {
+                                showError('Maximum 3 tags allowed');
+                                return;
+                            }
+                            
+                            for (const tag of tags) {
+                                if (tag.length < 2 || tag.length > 20) {
+                                    showError(`Tag "${tag}" must be 2-20 characters long`);
+                                    return;
+                                }
+                            }
+                            
+                            // Если все ок - можно отправлять
+                            alert('Form is valid! Would be submitted in real app.');
+                        } else {
+                            showError('Please fill all required fields correctly');
+                        }
+                        
+                        form.classList.add('was-validated');
+                    }, false);
+                    
+                    function showError(message) {
+                        const errorDiv = document.getElementById('formErrors');
+                        const errorList = document.getElementById('errorList');
+                        
+                        errorList.innerHTML = `<li>${message}</li>`;
+                        errorDiv.classList.remove('d-none');
+                    }
+                })();
+                </script>
+
+
+
+
+
+
+                
+            </section>
+
+
+            <aside class="col-3">
+                <section class="mb-3">
+                    <h3>Popular tags</h3>
+                    <div>
+                        <span class="badge rounded-pill text-bg-primary">Primary</span>
+                        <span class="badge rounded-pill text-bg-secondary">Secondary</span>
+                        <span class="badge rounded-pill text-bg-success">Success</span>
+                        <span class="badge rounded-pill text-bg-danger">Danger</span>
+                        <span class="badge rounded-pill text-bg-warning">Warning</span>
+                        <span class="badge rounded-pill text-bg-info">Info</span>
+                        <span class="badge rounded-pill text-bg-light">Light</span>
+                        <span class="badge rounded-pill text-bg-dark">Dark</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Best members</h3>
+                    <div>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                        <a class="d-block" href="#">Member</a>
+                    </div>
+                </section>
+            </aside>
+        </div>
+        
+    </main>
+
+    <script src="static/js/bootstrap.bundle.js"></script>
+</body>
+
+</html>
